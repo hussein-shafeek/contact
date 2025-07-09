@@ -4,7 +4,6 @@ import 'package:contact/components/contacts_save.dart';
 import 'package:flutter/material.dart';
 import '../components/app_layout.dart';
 import '../components/routes.dart';
-import 'package:lottie/lottie.dart';
 
 class ContactListScreen extends StatefulWidget {
   const ContactListScreen({super.key});
@@ -23,9 +22,8 @@ class _ContactListScreenState extends State<ContactListScreen> {
 
   void _deleteContact(int index) {
     setState(() {
-      // نحذف من القائمة الظاهرة
       contacts.removeAt(index);
-      // نحذف كمان من القائمة العامة
+
       globalContacts.removeAt(index);
     });
   }

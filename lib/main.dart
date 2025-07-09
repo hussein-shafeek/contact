@@ -31,5 +31,3 @@ class Contact extends StatelessWidget {
     );
   }
 }
-
-//adb push C:/Users/hussein/Pictures/my_image.jpg /sdcard/Pictures/

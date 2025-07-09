@@ -5,7 +5,7 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final TextInputType keyboardType;
-  final String? Function(String?)? validator; // ✅ نضيف دا علشان الكنترول
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
@@ -21,7 +21,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       style: Theme.of(context).textTheme.bodyMedium,
-      validator: validator, // ✅ الكنترول هنا
+      validator: validator,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(

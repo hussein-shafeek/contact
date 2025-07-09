@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:contact/components/contact_model.dart';
 import 'package:flutter/material.dart';
 import '../components/app_colors.dart';
@@ -20,7 +19,6 @@ class ContactCard extends StatelessWidget {
 
       child: Column(
         children: [
-          //  الصورة + الاسم فوقها
           Stack(
             children: [
               ClipRRect(
@@ -50,9 +48,9 @@ class ContactCard extends StatelessWidget {
                   ),
                   child: Text(
                     contact.name,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.black, // نغير اللون بس
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleMedium?.copyWith(color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -62,7 +60,7 @@ class ContactCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.primary, // ✅ لون الخلفية الموحد
+              color: AppColors.primary,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(12),
                 bottomRight: Radius.circular(12),
@@ -118,7 +116,6 @@ class ContactCard extends StatelessWidget {
 
                 const SizedBox(height: 12),
 
-                //✅ زر الحذف
                 ElevatedButton.icon(
                   onPressed: onDelete,
                   icon: const Icon(Icons.delete),

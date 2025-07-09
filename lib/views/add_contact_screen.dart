@@ -8,7 +8,6 @@ import 'package:contact/components/routes.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-//import 'package:contact/components/previewBox.dart';
 
 class AddContactScreen extends StatefulWidget {
   const AddContactScreen({super.key});
@@ -42,12 +41,12 @@ class _AddContactScreenState extends State<AddContactScreen> {
         context: context,
         builder:
             (_) => AlertDialog(
-              title: const Text('خطأ'),
-              content: const Text('من فضلك املأ جميع الحقول'),
+              title: const Text('mistake'),
+              content: const Text('Please fill in all fields.'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('تم'),
+                  child: const Text('Done'),
                 ),
               ],
             ),
@@ -66,20 +65,18 @@ class _AddContactScreenState extends State<AddContactScreen> {
         context: context,
         builder:
             (_) => AlertDialog(
-              title: const Text('إيميل غير صالح'),
-              content: const Text('أدخل بريد إلكتروني صحيح'),
+              title: const Text('Invalid email'),
+              content: const Text('Enter a valid email address'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('تم'),
+                  child: const Text('Done'),
                 ),
               ],
             ),
       );
       return;
     }
-
-    // ✅ لو كل شيء تمام
     print('Name: $name');
     print('Email: $email');
     print('Phone: $phone');
@@ -88,6 +85,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
   @override
   Widget build(BuildContext context) {
     @override
+    // ignore: unused_element
     void initState() {
       super.initState();
       nameController.addListener(() => setState(() {}));
@@ -116,7 +114,6 @@ class _AddContactScreenState extends State<AddContactScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // صورة المستخدم
                   GestureDetector(
                     onTap: pickImage,
                     child: Container(
@@ -127,7 +124,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: Theme.of(context).primaryColor,
-                          // لون البوردر الخفيف
+
                           width: 1.5,
                         ),
                       ),
@@ -152,7 +149,6 @@ class _AddContactScreenState extends State<AddContactScreen> {
 
                   const SizedBox(width: 10),
 
-                  // المعاينة: 3 “حقول” بنفس شكل الـ TextField
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

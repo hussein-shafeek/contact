@@ -10,7 +10,7 @@ class PreviewBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white10, // نفس لون الـ TextField
+        color: Colors.white10,
         borderRadius: BorderRadius.circular(12),
       ),
       alignment: Alignment.centerLeft,
