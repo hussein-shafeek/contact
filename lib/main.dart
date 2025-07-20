@@ -5,9 +5,10 @@ import 'package:contact/views/home.dart';
 import 'package:contact/views/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:contact/components/routes.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() {
-  runApp(Contact());
+  runApp(DevicePreview(enabled: true, builder: (context) => Contact()));
 }
 
 class Contact extends StatelessWidget {
@@ -27,6 +28,7 @@ class Contact extends StatelessWidget {
       },
       //theme: AppTheme.mainTheme,
       darkTheme: AppTheme.CustomeDarkTheme,
+
       themeMode: ThemeMode.dark,
     );
   }

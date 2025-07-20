@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PreviewBox extends StatelessWidget {
   final String text;
   final String hint;
-  const PreviewBox({required this.text, required this.hint});
+  const PreviewBox({super.key, required this.text, required this.hint});
 
   @override
   Widget build(BuildContext context) {

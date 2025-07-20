@@ -41,7 +41,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
         context: context,
         builder:
             (_) => AlertDialog(
-              title: const Text('mistake'),
+              title: const Text('Missing Fields'),
               content: const Text('Please fill in all fields.'),
               actions: [
                 TextButton(
@@ -53,11 +53,6 @@ class _AddContactScreenState extends State<AddContactScreen> {
       );
       return;
     }
-    globalContacts.add(
-      ContactModel(name: name, email: email, phone: phone, image: _imageFile),
-    );
-
-    Navigator.pushReplacementNamed(context, AppRoutes.contactListScreen);
 
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(email)) {
@@ -65,8 +60,38 @@ class _AddContactScreenState extends State<AddContactScreen> {
         context: context,
         builder:
             (_) => AlertDialog(
-              title: const Text('Invalid email'),
-              content: const Text('Enter a valid email address'),
+              title: const Text('Invalid Email'),
+              content: const Text('Enter a valid email address.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    FocusScope.of(
+                      context,
+                    ).requestFocus(FocusNode()); // remove focus
+                  },
+                  child: const Text('Done'),
+                ),
+              ],
+            ),
+      );
+      return;
+    }
+
+    // Optional: Validate phone
+
+    final cleanedPhone = phone.replaceAll(
+      RegExp(r'\D'),
+      '',
+    ); // يشيل أي حاجة مش رقم
+
+    if (cleanedPhone.length != 11) {
+      showDialog(
+        context: context,
+        builder:
+            (_) => AlertDialog(
+              title: const Text('Invalid Phone Number'),
+              content: const Text('Phone number must be exactly 11 digits.'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
@@ -77,144 +102,150 @@ class _AddContactScreenState extends State<AddContactScreen> {
       );
       return;
     }
-    print('Name: $name');
-    print('Email: $email');
-    print('Phone: $phone');
+
+    globalContacts.add(
+      ContactModel(name: name, email: email, phone: phone, image: _imageFile),
+    );
+
+    Navigator.pushReplacementNamed(context, AppRoutes.contactListScreen);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.addListener(() => setState(() {}));
+    emailController.addListener(() => setState(() {}));
+    phoneController.addListener(() => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
-    @override
     // ignore: unused_element
-    void initState() {
-      super.initState();
-      nameController.addListener(() => setState(() {}));
-      emailController.addListener(() => setState(() {}));
-      phoneController.addListener(() => setState(() {}));
-    }
 
     return AppLayout(
-      child: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: SingleChildScrollView(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-              Center(
-                child: Lottie.asset(
-                  'assets/animations/empty.json',
-                  width: 220,
-                  height: 220,
-                  fit: BoxFit.contain,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                Center(
+                  child: Lottie.asset(
+                    'assets/animations/empty.json',
+                    width: 220,
+                    height: 220,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: pickImage,
-                    child: Container(
-                      height: 130,
-                      width: 130,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
+                const SizedBox(height: 24),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: pickImage,
+                      child: Container(
+                        height: 130,
+                        width: 130,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Theme.of(context).primaryColor,
 
-                          width: 1.5,
+                            width: 1.5,
+                          ),
                         ),
+
+                        child:
+                            _imageFile != null
+                                ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.file(
+                                    _imageFile!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                                : Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Lottie.asset(
+                                    'assets/animations/contact_animations/image_picker.json',
+                                  ),
+                                ),
                       ),
+                    ),
 
-                      child:
-                          _imageFile != null
-                              ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.file(
-                                  _imageFile!,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                              : Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Lottie.asset(
-                                  'assets/animations/contact_animations/image_picker.json',
-                                ),
-                              ),
+                    const SizedBox(width: 10),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            nameController.text.isEmpty
+                                ? 'User Name'
+                                : nameController.text,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          const Divider(color: AppColors.primary, thickness: 1),
+                          const SizedBox(height: 4),
+                          Text(
+                            emailController.text.isEmpty
+                                ? 'example@email.com'
+                                : emailController.text,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          const Divider(color: AppColors.primary, thickness: 1),
+
+                          const SizedBox(height: 4),
+                          Text(
+                            phoneController.text.isEmpty
+                                ? '01xxxxxxxxx'
+                                : phoneController.text,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          const Divider(color: AppColors.primary, thickness: 1),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                CustomTextField(
+                  hint: 'Enter User Name ',
+                  controller: nameController,
+                ),
+                const SizedBox(height: 12),
+                CustomTextField(
+                  hint: 'Enter User Email ',
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 12),
+                CustomTextField(
+                  hint: 'Enter User Phone',
+                  controller: phoneController,
+                  keyboardType: TextInputType.phone,
+                ),
+                const SizedBox(height: 17),
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-
-                  const SizedBox(width: 10),
-
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          nameController.text.isEmpty
-                              ? 'User Name'
-                              : nameController.text,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        const Divider(color: AppColors.primary, thickness: 1),
-                        const SizedBox(height: 4),
-                        Text(
-                          emailController.text.isEmpty
-                              ? 'example@email.com'
-                              : emailController.text,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        const Divider(color: AppColors.primary, thickness: 1),
-
-                        const SizedBox(height: 4),
-                        Text(
-                          phoneController.text.isEmpty
-                              ? '01xxxxxxxxx'
-                              : phoneController.text,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        const Divider(color: AppColors.primary, thickness: 1),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                hint: 'Enter User Name ',
-                controller: nameController,
-              ),
-              const SizedBox(height: 12),
-              CustomTextField(
-                hint: 'Enter User Email ',
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 12),
-              CustomTextField(
-                hint: 'Enter User Phone',
-                controller: phoneController,
-                keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: 20),
-
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  onPressed: validateAndSave,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: const Text('Enter user'),
                   ),
                 ),
-                onPressed: validateAndSave,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: const Text('Enter user'),
-                ),
-              ),
-              const SizedBox(height: 20),
-            ],
+                // const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

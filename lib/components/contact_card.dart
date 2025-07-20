@@ -11,7 +11,6 @@ class ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 340,
       decoration: BoxDecoration(
         color: AppColors.inputFill,
         borderRadius: BorderRadius.circular(16),
@@ -48,6 +47,7 @@ class ContactCard extends StatelessWidget {
                   ),
                   child: Text(
                     contact.name,
+
                     style: Theme.of(
                       context,
                     ).textTheme.titleMedium?.copyWith(color: Colors.black),
@@ -80,6 +80,7 @@ class ContactCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         contact.email,
+
                         style: TextStyle(
                           color: AppColors.background,
                           fontSize: 10,
@@ -103,6 +104,7 @@ class ContactCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         contact.phone,
+
                         style: TextStyle(
                           color: AppColors.background,
                           fontSize: 10,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData CustomeDarkTheme = ThemeData(
-    primaryColor: AppColors.primary,
+    primaryColor: const Color.fromRGBO(255, 241, 212, 1),
     scaffoldBackgroundColor: AppColors.background,
     fontFamily: 'Roboto',
     textTheme: const TextTheme(
