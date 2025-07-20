@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;
@@ -22,6 +21,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       style: Theme.of(context).textTheme.bodyMedium,
       validator: validator,
+
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(

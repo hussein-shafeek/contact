@@ -55,22 +55,20 @@ class _ContactListScreenState extends State<ContactListScreen> {
         ],
       ),
 
-      child: Expanded(
-        child: GridView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: contacts.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 3 / 5,
-          ),
-          itemBuilder:
-              (context, index) => ContactCard(
-                contact: contacts[index],
-                onDelete: () => _deleteContact(index),
-              ),
+      child: GridView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: contacts.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 3.1 / 5.4,
         ),
+        itemBuilder:
+            (context, index) => ContactCard(
+              contact: contacts[index],
+              onDelete: () => _deleteContact(index),
+            ),
       ),
     );
   }

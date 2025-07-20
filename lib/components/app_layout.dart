@@ -18,7 +18,7 @@ class AppLayout extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8, bottom: 8, left: 20),
               child: Image.asset('assets/logos/smallLogo.png', width: 120),
             ),
-            child,
+            Expanded(child: child),
           ],
         ),
       ),
